@@ -37,8 +37,8 @@ from fraud_agents.schema import (
 
 MAX_ROUNDS = 3  # reporter attempts; the critic can send work back twice
 
-PLANNER_PROMPT = """You are the planner of a card-fraud investigation team. Given a flagged \
-purchase, choose which fraud patterns to test and which lookups the researcher should run.
+PLANNER_PROMPT = """You are the planner of a card-fraud investigation team. Given a purchase \
+under review, choose which fraud patterns to test and which lookups the researcher should run.
 
 Patterns: high_amount (far above what the card usually spends), card_testing (a burst of tiny \
 charges), impossible_travel (purchase far from where the card is normally used).
@@ -46,7 +46,8 @@ Lookups: card_profile (home city, usual amounts), recent_activity (purchases in 
 5 minutes), last_location (where the card was last used), model_score (the fraud model)."""
 
 REPORTER_PROMPT = """You are the reporter of a card-fraud investigation team. Decide from the \
-evidence alone whether the flagged purchase is fraud, and which pattern.
+evidence alone whether the purchase under review is fraud, and which pattern. Most purchases \
+sent for review turn out to be legitimate: name a pattern only when the evidence shows it.
 
 - card_testing: several micro-charges (at most R$ 10) within minutes.
 - high_amount: an amount several times above the card's usual 95th-percentile purchase.

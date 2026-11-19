@@ -28,7 +28,9 @@ def money(x: float | None) -> str:
 
 async def alert_evidence(activity: Client, transaction_id: str) -> Evidence:
     tx = await call(activity, "get_alert", {"transaction_id": transaction_id})
-    fact = (f"Flagged purchase: {money(tx['amount'])} on {tx['category']} in {tx['city']} at "
+    # Neutral wording: eval run 1 showed "Flagged purchase" pushed the model to call nearly every
+    # case fraud, even with a fraud-model probability of 0.000.
+    fact = (f"Purchase under review: {money(tx['amount'])} on {tx['category']} in {tx['city']} at "
             f"{tx['timestamp']} (card {tx['card_id']}, merchant {tx['merchant']}).")  # fmt: skip
     return Evidence(id="E1", check="alert", fact=fact, data=tx)
 

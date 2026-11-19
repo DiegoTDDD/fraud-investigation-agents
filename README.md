@@ -76,7 +76,7 @@ python scripts/run_eval.py          # eval/results.md and one transcript per cas
 
 ## Tests
 
-`pytest -q -p anyio`: 31 tests. Card facts never look past the alert; every Critic rule
+`pytest -q -p anyio`: 34 tests. Card facts never look past the alert; every Critic rule
 rejects with a specific reason; the graph runs end to end against both MCP servers with a
 scripted model through approval, rejection back to the Reporter, missing evidence back to the
 Researcher, the round cap, and invalid JSON; the diagram in `docs/graph.mmd` matches the code.

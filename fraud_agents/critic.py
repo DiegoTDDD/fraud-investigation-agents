@@ -18,8 +18,9 @@ HIGH_AMOUNT_FLOOR = 2000.0  # ...and at least this many BRL
 REQUIRED_CHECKS: dict[str, tuple[Check, ...]] = {
     "card_testing": ("recent_activity",),
     "high_amount": ("card_profile",),
-    "impossible_travel": ("card_profile",),
+    "impossible_travel": ("card_profile", "model_score"),
 }
+ALWAYS_REQUIRED: tuple[Check, ...] = ("card_profile", "model_score")
 
 
 def signals(evidence: list[Evidence]) -> dict[str, Any]:
@@ -41,6 +42,18 @@ def signals(evidence: list[Evidence]) -> dict[str, Any]:
         out["away_from_home"] = bool(home) and alert.get("city") != home
     if "model_score" in by_check:
         out["model_flagged"] = by_check["model_score"]["flagged"]
+    return out
+
+
+def supported_patterns(sig: dict[str, Any]) -> list[str]:
+    """Patterns the evidence supports on its own, strongest first."""
+    out = []
+    if sig.get("micro_burst"):
+        out.append("card_testing")
+    if sig.get("high_amount"):
+        out.append("high_amount")
+    if sig.get("away_from_home") and sig.get("model_flagged"):
+        out.append("impossible_travel")
     return out
 
 
@@ -77,6 +90,12 @@ def critique(report: Report, evidence: list[Evidence]) -> Critique:
         )
     if report.fraud_type == "impossible_travel" and sig.get("away_from_home") is False:
         problems.append("impossible_travel needs the purchase to be outside the home city.")
+    if (report.fraud_type == "impossible_travel" and sig.get("away_from_home")
+            and sig.get("model_flagged") is False):  # fmt: skip
+        # In this data many legitimate purchases are in another city; being away is not enough
+        # (eval run 1, case c28).
+        problems.append("The purchase is outside the home city, but the fraud model does not "
+                        "flag it, so nothing makes the travel implausible.")  # fmt: skip
 
     # A legitimate verdict cannot ignore a pattern the evidence clearly shows.
     if report.verdict == "legitimate":
@@ -90,7 +109,17 @@ def critique(report: Report, evidence: list[Evidence]) -> Critique:
         problems.append("The micro-charge burst points to card_testing, not "
                         f"{report.fraud_type}.")  # fmt: skip
 
-    if "card_profile" not in sig["checks"]:
-        missing.append("card_profile")  # no verdict without knowing the card's normal behaviour
+    for check in ALWAYS_REQUIRED:  # no verdict without the card's normal behaviour and the model
+        if check not in sig["checks"]:
+            missing.append(check)
+
+    # When the claimed pattern fails and the evidence supports none, say so: in eval run 1 the
+    # reporter kept swapping one unsupported pattern for another until it ran out of rounds.
+    if report.verdict == "fraud" and problems and not missing and not supported_patterns(sig):
+        problems.append(
+            "No evidence supports any fraud pattern (no micro-charge burst, no "
+            "extreme amount, no flagged purchase away from home). Unless you can "
+            "cite evidence for one, the verdict is legitimate with fraud_type none."
+        )
     return Critique(approved=not problems and not missing, problems=problems,
                     missing_checks=sorted(set(missing)))  # fmt: skip

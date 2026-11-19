@@ -28,7 +28,9 @@ def report(verdict="fraud", kind="card_testing", ids=("E1", "E3")) -> Report:
 def test_supported_reports_are_approved():
     assert critique(report(), ev(micro=5)).approved
     assert critique(report(kind="high_amount", ids=["E2"]), ev(amount=9000)).approved
-    assert critique(report(kind="impossible_travel", ids=["E2"]), ev(city="Manaus")).approved
+    assert critique(
+        report(kind="impossible_travel", ids=["E2"]), ev(city="Manaus", flagged=True)
+    ).approved
     assert critique(report("legitimate", "none", ["E2"]), ev()).approved
 
 
@@ -41,6 +43,8 @@ def test_supported_reports_are_approved():
     (report(kind="high_amount"), ev(amount=250), "95th-percentile"),
     (report(kind="high_amount"), ev(amount=1500, p95=100), "95th-percentile"),  # under the floor
     (report(kind="impossible_travel"), ev(), "outside the home city"),
+    (report(kind="impossible_travel"), ev(city="Manaus"), "does not flag it"),
+    (report(kind="high_amount"), ev(amount=250), "No evidence supports any fraud pattern"),
     (report("legitimate", "none"), ev(micro=4), "burst of micro-charges"),
     (report("legitimate", "none"), ev(amount=9000), "far above"),
     (report(kind="impossible_travel"), ev(city="Manaus", micro=4), "points to card_testing"),
@@ -68,3 +72,8 @@ def test_rules_baseline_order():
     assert rules_only(ev(amount=9000)).fraud_type == "high_amount"
     assert rules_only(ev(city="Manaus", flagged=True)).fraud_type == "impossible_travel"
     assert rules_only(ev(city="Manaus")).verdict == "legitimate"  # away but not flagged
+
+
+def test_the_model_score_is_always_required():
+    c = critique(report("legitimate", "none", ["E2"]), ev(checks=("card_profile",)))
+    assert c.missing_checks == ["model_score"]

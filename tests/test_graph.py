@@ -34,13 +34,18 @@ def investigator(store, fraud_model):
 
 
 async def test_approved_on_the_first_round(investigator):
-    inv, llm = investigator([plan(["recent_activity", "card_profile"]),
+    inv, llm = investigator([plan(["recent_activity", "card_profile", "model_score"]),
                              rep("fraud", "card_testing", ["E1", "E2"])])  # fmt: skip
     result = await inv.investigate("alert-testing")
     assert result.approved and result.rounds == 1 and result.llm_calls == 2
     assert [s.node for s in result.trace] == ["intake", "planner", "researcher", "reporter",
                                               "critic"]  # fmt: skip
-    assert [e.check for e in result.evidence] == ["alert", "recent_activity", "card_profile"]
+    assert [e.check for e in result.evidence] == [
+        "alert",
+        "recent_activity",
+        "card_profile",
+        "model_score",
+    ]
     assert "5 purchases, 5 of them micro-charges" in result.evidence[1].fact
     assert llm.calls[0]["schema"]["title"] == "Plan"
     assert llm.calls[1]["schema"]["title"] == "Report"
@@ -48,7 +53,7 @@ async def test_approved_on_the_first_round(investigator):
 
 async def test_critic_rejection_goes_back_to_the_reporter_with_the_reason(investigator):
     inv, llm = investigator([
-        plan(["card_profile", "recent_activity"]),
+        plan(["card_profile", "recent_activity", "model_score"]),
         rep("legitimate", "none", ["E2"]),  # ignores the burst
         rep("fraud", "card_testing", ["E3"]),
     ])  # fmt: skip
@@ -99,7 +104,7 @@ async def test_single_agent_baseline_runs_every_check_once(store, fraud_model):
 
 
 async def test_invalid_json_from_the_model_is_retried_once(investigator):
-    inv, _ = investigator([ChatReply(content="not json"), plan(["card_profile"]),
+    inv, _ = investigator([ChatReply(content="not json"), plan(["card_profile", "model_score"]),
                              rep("legitimate", "none", ["E2"])])  # fmt: skip
     result = await inv.investigate("alert-legit")
     assert result.approved and result.llm_calls == 3
