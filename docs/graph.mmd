@@ -1,0 +1,24 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	intake(intake)
+	planner(planner)
+	researcher(researcher)
+	reporter(reporter)
+	critic(critic)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> intake;
+	critic -.-> __end__;
+	critic -.-> reporter;
+	critic -.-> researcher;
+	intake --> planner;
+	planner --> researcher;
+	reporter --> critic;
+	researcher --> reporter;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc

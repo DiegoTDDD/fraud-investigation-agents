@@ -1,0 +1,38 @@
+[project]
+name = "fraud-investigation-agents"
+version = "1.0.0"
+description = "A LangGraph team (planner, researcher, reporter, critic) that investigates card-fraud alerts through MCP tools."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = [
+    "sec-mcp-agent",
+    "langgraph>=1.2",
+    "mcp>=2.3,<3",
+    "pydantic>=2.10",
+    "pandas>=2.2",
+    "pyarrow>=17",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "anyio>=4", "ruff>=0.6"]
+
+[tool.setuptools.packages.find]
+include = ["fraud_agents*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "T20", "RUF", "ANN"]
+ignore = ["ANN401", "RUF001", "RUF002", "RUF003", "SIM905"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ANN"]
+"scripts/**" = ["T20"]
+"scripts/run_eval.py" = ["T20", "E501"]  # markdown table rows
