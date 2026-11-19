@@ -9,6 +9,12 @@ cites the evidence, and a **Critic** checks it and sends work back when the evid
 support it. Measured on 30 alerts with known answers against the fraud model alone, plain
 rules and a single LLM call. Everything runs free: a local 3B model through Ollama on a CPU.
 
+![Demo: the Critic rejects a report the evidence does not support and the graph corrects it](docs/demo.gif)
+
+Two investigations recorded in the evaluation run, not staged: in both, the Critic rejects the
+first report with the rule it breaks and the second round reaches the right verdict
+([`scripts/render_demo.py`](scripts/render_demo.py); [MP4](docs/demo.mp4)).
+
 ## Problem
 
 A fraud model can flag a transaction, but an analyst still has to find out *what* happened
@@ -143,7 +149,10 @@ Researcher, the round cap, and invalid JSON; the diagram in `docs/graph.mmd` mat
   second, so 4.2 hours), so purchase counts and travel speed carry little information; the Critic
   does not use them (ADR 0005).
 - Part of "impossible travel" cannot be told apart from legitimate travel with this data.
-- The Critic checks that claims match the evidence, not that the investigation was complete.
+- The Critic checks the verdict, the fraud type and the cited evidence against rules, not that
+  the investigation was complete, and it does not read the free-text summary: an approved report
+  can still misstate the evidence in prose (case c18's summary mentions micro-charges that
+  evidence E3 rules out).
 
 ## Stack
 
