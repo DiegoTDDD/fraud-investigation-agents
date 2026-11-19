@@ -57,11 +57,59 @@ of them outside the home city).
 ## Results
 
 <!-- EVAL:START -->
-The first evaluation run is in progress on GitHub Actions; this section is filled from
-`eval/results.md` when it finishes.
+Eval run [44537432010](https://github.com/DiegoTDDD/fraud-investigation-agents/actions/runs/44537432010),
+qwen2.5:3b on a CPU-only GitHub runner, temperature 0. Full table and one transcript per case
+in [`eval/results.md`](eval/results.md).
 
-Baselines measured before any language model ran: the fraud model alone gets 29 of 30
-verdicts right, and the Critic's rules alone name the right pattern in 24 of 30.
+| System | Verdict right | Verdict and pattern right | Median seconds per case |
+| --- | --- | --- | --- |
+| Fraud model alone | **97%** | n/a (gives no pattern) | 0 |
+| Rules alone (the Critic's signals) | 83% | **80%** | 0 |
+| Single agent (all checks, one LLM call, no Critic) | 80% | 47% | 24 |
+| **Graph** (Planner, Researcher, Reporter, Critic) | 83% | **77%** | 51 |
+
+What this says:
+
+- **The Critic loop is what makes the language model useful: +30 points** over the same model
+  with the same evidence in a single call (47% → 77%). It sent 21 of 30 reports back at least
+  once; the rework turned 12 wrong answers right and 3 right answers wrong.
+- **The graph matches the rules on 29 of 30 cases** and differs on one (c22, an impossible-travel
+  case it labelled high amount). What it adds is the investigation itself: a plan, numbered
+  evidence and a report that cites it, checked by the Critic.
+- **The fraud model is the better detector** (97% of verdicts). The agents explain and classify;
+  they should not replace the model's decision.
+- **Hard cases** stay hard for every system: the first charge of a card-testing burst (0 of 2,
+  no pattern exists yet) and legitimate purchases away from home (the graph gets 3 of 3, the
+  single agent 0 of 3).
+
+By case type (pattern right):
+
+| Case type | Cases | Rules | Single agent | Graph |
+| --- | --- | --- | --- | --- |
+| card testing | 6 | 6 | 0 | 6 |
+| card testing, first charge of a burst (hard) | 2 | 0 | 0 | 0 |
+| high amount | 8 | 7 | 8 | 7 |
+| impossible travel | 7 | 5 | 2 | 4 |
+| legitimate | 4 | 3 | 4 | 3 |
+| legitimate outside the home city (hard) | 3 | 3 | 0 | 3 |
+
+### Run 1 → run 2: a regression found in the transcripts and fixed
+
+Run 1 ([`eval/history/run1`](eval/history/run1/results.md)) scored 67% for the graph and only 2
+of 7 legitimate cases. The transcripts showed three causes, fixed in
+[4920573](https://github.com/DiegoTDDD/fraud-investigation-agents/commit/4920573):
+
+| Cause seen in run 1 | Fix |
+| --- | --- |
+| The alert was worded "Flagged purchase"; the model called fraud even at model probability 0.000 | Neutral wording ("Purchase under review") and a base-rate reminder in the Reporter prompt |
+| The Critic rejected an unsupported pattern without saying that none was supported, so the Reporter swapped one wrong pattern for another until rounds ran out (8 cases) | The Critic now says when the evidence supports no pattern |
+| Impossible travel approved for a purchase merely outside the home city (c28), common for legitimate purchases here | Impossible travel needs the fraud model to flag the purchase; the model score is required for every verdict |
+
+| | Run 1 | Run 2 |
+| --- | --- | --- |
+| Graph, pattern right | 67% | **77%** |
+| Legitimate cases right (graph) | 2 of 7 | **6 of 7** |
+| Reports still rejected after 3 rounds | 8 | **1** |
 <!-- EVAL:END -->
 
 ## Run it
