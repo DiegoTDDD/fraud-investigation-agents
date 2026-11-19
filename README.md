@@ -76,7 +76,7 @@ python scripts/run_eval.py          # eval/results.md and one transcript per cas
 
 ## Tests
 
-`pytest -q -p anyio`: 30 tests. Card facts never look past the alert; every Critic rule
+`pytest -q -p anyio`: 31 tests. Card facts never look past the alert; every Critic rule
 rejects with a specific reason; the graph runs end to end against both MCP servers with a
 scripted model through approval, rejection back to the Reporter, missing evidence back to the
 Researcher, the round cap, and invalid JSON; the diagram in `docs/graph.mmd` matches the code.
@@ -91,8 +91,9 @@ Researcher, the round cap, and invalid JSON; the diagram in `docs/graph.mmd` mat
 
 ## Limits
 
-- The data is synthetic and dense (150,000 purchases in 4.2 hours), so velocity and travel
-  speed carry little information; the Critic does not use them (ADR 0005).
+- The data is synthetic and dense by design (200 cards at the live stream's 10 purchases per
+  second, so 4.2 hours), so purchase counts and travel speed carry little information; the Critic
+  does not use them (ADR 0005).
 - Part of "impossible travel" cannot be told apart from legitimate travel with this data.
 - The Critic checks that claims match the evidence, not that the investigation was complete.
 

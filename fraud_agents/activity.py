@@ -88,6 +88,15 @@ class ActivityStore:
         row = self.df.iloc[self.by_id[transaction_id]]
         return _txn(row)
 
+    def find(self, card_id: str, timestamp: datetime | str) -> str:
+        """The transaction_id of a card's purchase at an exact time (how cases are stored)."""
+        ts = to_utc_naive(timestamp)
+        times = self._times.get(card_id, [])
+        i = bisect.bisect_left(times, ts)
+        if i == len(times) or times[i] != ts:
+            raise KeyError(f"No purchase on {card_id} at {ts.isoformat()}")
+        return self.cards[card_id].iloc[i]["transaction_id"]
+
     def _before(self, card_id: str, before: datetime) -> pd.DataFrame:
         if card_id not in self.cards:
             raise KeyError(f"No card {card_id!r}")

@@ -159,7 +159,7 @@ async def run(args: argparse.Namespace) -> None:
     async with Client(activity_server(store)) as act, Client(fraud_server(fraud)) as fr:
         for case in cases:
             row: dict[str, Any] = {**case, "systems": {}, "graph": None}
-            tid = case["transaction_id"]
+            tid = store.find(case["card_id"], case["timestamp"])
             t0 = time.perf_counter()
             try:
                 report, evidence, _ = await single_agent(llm, act, fr, tid)

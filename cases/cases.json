@@ -1,210 +1,240 @@
 [
  {
   "id": "c01",
-  "transaction_id": "2b2f8e62-bd94-46db-b992-386e081b35d0",
+  "card_id": "card_0138",
+  "timestamp": "2026-01-01T03:33:33.500000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "high_amount",
   "difficulty": "normal"
  },
  {
   "id": "c02",
-  "transaction_id": "92312173-19f4-457e-b9f9-ec968ac49389",
+  "card_id": "card_0076",
+  "timestamp": "2026-01-01T03:44:46.900000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "high_amount",
   "difficulty": "normal"
  },
  {
   "id": "c03",
-  "transaction_id": "0b5a12c8-7c6e-4f04-bfd0-80c66a417dfa",
+  "card_id": "card_0073",
+  "timestamp": "2026-01-01T03:55:47.600000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "high_amount",
   "difficulty": "normal"
  },
  {
   "id": "c04",
-  "transaction_id": "3cd8065e-dd2f-469d-87e6-e1030c339c79",
+  "card_id": "card_0047",
+  "timestamp": "2026-01-01T03:55:03+00:00",
   "expected_verdict": "fraud",
   "expected_type": "high_amount",
   "difficulty": "normal"
  },
  {
   "id": "c05",
-  "transaction_id": "f820fe4b-07b2-459a-b629-a0dc37aa6ddc",
+  "card_id": "card_0048",
+  "timestamp": "2026-01-01T03:26:11.400000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "high_amount",
   "difficulty": "normal"
  },
  {
   "id": "c06",
-  "transaction_id": "24358e69-16c9-4037-810d-64932019990c",
+  "card_id": "card_0183",
+  "timestamp": "2026-01-01T03:45:09.700000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "high_amount",
   "difficulty": "normal"
  },
  {
   "id": "c07",
-  "transaction_id": "fe8a624c-0720-4aba-89c9-4dbc26bbdce5",
+  "card_id": "card_0012",
+  "timestamp": "2026-01-01T03:26:56.500000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "high_amount",
   "difficulty": "normal"
  },
  {
   "id": "c08",
-  "transaction_id": "11efdc15-8376-45dc-b4f4-39094c0b04dd",
+  "card_id": "card_0113",
+  "timestamp": "2026-01-01T03:55:05.900000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "high_amount",
   "difficulty": "normal"
  },
  {
   "id": "c09",
-  "transaction_id": "1995ea65-db11-4324-b630-ac7f33e70835",
+  "card_id": "card_0104",
+  "timestamp": "2026-01-01T03:35:45.700000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "card_testing",
   "difficulty": "normal"
  },
  {
   "id": "c10",
-  "transaction_id": "f87e55ff-834b-4cbe-833a-50470f3fcddc",
+  "card_id": "card_0080",
+  "timestamp": "2026-01-01T03:46:42.700000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "card_testing",
   "difficulty": "normal"
  },
  {
   "id": "c11",
-  "transaction_id": "d70e5ecd-a493-4bf3-8612-0ab1ff699a3b",
+  "card_id": "card_0010",
+  "timestamp": "2026-01-01T03:51:57+00:00",
   "expected_verdict": "fraud",
   "expected_type": "card_testing",
   "difficulty": "normal"
  },
  {
   "id": "c12",
-  "transaction_id": "01a7f8b2-1b76-4235-9215-07dd46c1cf7d",
+  "card_id": "card_0137",
+  "timestamp": "2026-01-01T03:32:41.500000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "card_testing",
   "difficulty": "normal"
  },
  {
   "id": "c13",
-  "transaction_id": "d16fd1c3-4b7e-4b09-8e8f-605f02d92a1a",
+  "card_id": "card_0010",
+  "timestamp": "2026-01-01T03:51:56.700000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "card_testing",
   "difficulty": "normal"
  },
  {
   "id": "c14",
-  "transaction_id": "14264a76-d27f-4a67-9df2-627adc090080",
+  "card_id": "card_0199",
+  "timestamp": "2026-01-01T03:33:23+00:00",
   "expected_verdict": "fraud",
   "expected_type": "card_testing",
   "difficulty": "normal"
  },
  {
   "id": "c15",
-  "transaction_id": "68e864a4-e10b-449f-9f7b-134aa3288a56",
+  "card_id": "card_0056",
+  "timestamp": "2026-01-01T03:25:55.800000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "card_testing",
   "difficulty": "hard: first charge of a burst"
  },
  {
   "id": "c16",
-  "transaction_id": "126fb738-9e82-4e7f-895c-2e39d41852d8",
+  "card_id": "card_0070",
+  "timestamp": "2026-01-01T04:06:59.300000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "card_testing",
   "difficulty": "hard: first charge of a burst"
  },
  {
   "id": "c17",
-  "transaction_id": "2c67a68e-b5af-469b-9353-559fa5ca37f8",
+  "card_id": "card_0182",
+  "timestamp": "2026-01-01T03:25:01.900000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "impossible_travel",
   "difficulty": "normal"
  },
  {
   "id": "c18",
-  "transaction_id": "54cf6ded-a75a-4f56-925c-8fb6aad15258",
+  "card_id": "card_0141",
+  "timestamp": "2026-01-01T04:06:30+00:00",
   "expected_verdict": "fraud",
   "expected_type": "impossible_travel",
   "difficulty": "normal"
  },
  {
   "id": "c19",
-  "transaction_id": "49e9013e-a589-4672-a6c8-384ef119f76c",
+  "card_id": "card_0155",
+  "timestamp": "2026-01-01T03:32:49.700000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "impossible_travel",
   "difficulty": "normal"
  },
  {
   "id": "c20",
-  "transaction_id": "cd0a4a8f-6dc0-48fa-86cb-1daff4e68b66",
+  "card_id": "card_0048",
+  "timestamp": "2026-01-01T03:38:20.300000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "impossible_travel",
   "difficulty": "normal"
  },
  {
   "id": "c21",
-  "transaction_id": "5c55ca17-ee2e-4c6a-9b62-d7f47cbeb8fe",
+  "card_id": "card_0062",
+  "timestamp": "2026-01-01T03:26:00.900000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "impossible_travel",
   "difficulty": "normal"
  },
  {
   "id": "c22",
-  "transaction_id": "cc63918b-3750-43ef-b975-72a761423633",
+  "card_id": "card_0142",
+  "timestamp": "2026-01-01T04:09:04.400000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "impossible_travel",
   "difficulty": "normal"
  },
  {
   "id": "c23",
-  "transaction_id": "1081ddb3-44d5-4952-910a-53cb47238d29",
+  "card_id": "card_0077",
+  "timestamp": "2026-01-01T03:30:41.600000+00:00",
   "expected_verdict": "fraud",
   "expected_type": "impossible_travel",
   "difficulty": "normal"
  },
  {
   "id": "c24",
-  "transaction_id": "a6e971d6-c214-4b15-a054-d7dc22d64edd",
+  "card_id": "card_0047",
+  "timestamp": "2026-01-01T04:04:15.500000+00:00",
   "expected_verdict": "legitimate",
   "expected_type": "none",
   "difficulty": "normal"
  },
  {
   "id": "c25",
-  "transaction_id": "c2a6ffae-60b6-4276-96b9-6124ae4d3c35",
+  "card_id": "card_0172",
+  "timestamp": "2026-01-01T03:59:42.900000+00:00",
   "expected_verdict": "legitimate",
   "expected_type": "none",
   "difficulty": "normal"
  },
  {
   "id": "c26",
-  "transaction_id": "044905d0-23a5-42b9-b7ac-c990766035eb",
+  "card_id": "card_0170",
+  "timestamp": "2026-01-01T03:33:45.900000+00:00",
   "expected_verdict": "legitimate",
   "expected_type": "none",
   "difficulty": "normal"
  },
  {
   "id": "c27",
-  "transaction_id": "b8812a04-6c07-4203-b1c8-a9e9f819a119",
+  "card_id": "card_0169",
+  "timestamp": "2026-01-01T03:45:11.700000+00:00",
   "expected_verdict": "legitimate",
   "expected_type": "none",
   "difficulty": "normal"
  },
  {
   "id": "c28",
-  "transaction_id": "ba52fb91-44ed-4d03-b66e-0a653958635b",
+  "card_id": "card_0143",
+  "timestamp": "2026-01-01T03:46:58.700000+00:00",
   "expected_verdict": "legitimate",
   "expected_type": "none",
   "difficulty": "hard: legitimate purchase outside the home city"
  },
  {
   "id": "c29",
-  "transaction_id": "6182d1d1-0578-49f5-9737-2dd134025041",
+  "card_id": "card_0031",
+  "timestamp": "2026-01-01T03:26:58.500000+00:00",
   "expected_verdict": "legitimate",
   "expected_type": "none",
   "difficulty": "hard: legitimate purchase outside the home city"
  },
  {
   "id": "c30",
-  "transaction_id": "96575263-d375-449c-b19f-2a5304006c32",
+  "card_id": "card_0095",
+  "timestamp": "2026-01-01T04:09:34.200000+00:00",
   "expected_verdict": "legitimate",
   "expected_type": "none",
   "difficulty": "hard: legitimate purchase outside the home city"

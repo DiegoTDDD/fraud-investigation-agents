@@ -64,3 +64,10 @@ async def test_server_tools_and_errors(data_dir):
         assert recent.structured_content["micro_charges"] == 5
         missing = await client.call_tool("get_alert", {"transaction_id": "nope"})
         assert missing.is_error and "No transaction" in missing.content[0].text
+
+
+def test_find_a_purchase_by_card_and_time(store):
+    assert store.find("card_b", T0.isoformat() + "+00:00") == "alert-high"
+    assert store.find("card_b", T0) == "alert-high"
+    with pytest.raises(KeyError):
+        store.find("card_b", T0 + timedelta(seconds=1))

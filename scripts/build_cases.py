@@ -43,7 +43,9 @@ def main() -> None:
 
     def pick(frame: pd.DataFrame, n: int, label: str, difficulty: str) -> list[dict]:
         rows = frame.sample(n, random_state=SEED) if len(frame) >= n else frame
-        return [{"transaction_id": r.transaction_id, "expected_verdict":
+        # Card + timestamp, not transaction_id: the generator draws ids with uuid4(), which the
+        # seed does not control, so ids change on every rebuild while everything else repeats.
+        return [{"card_id": r.card_id, "timestamp": r.ts.isoformat(), "expected_verdict":
                  "legitimate" if label == "none" else "fraud", "expected_type": label,
                  "difficulty": difficulty} for r in rows.itertuples()]  # fmt: skip
 
